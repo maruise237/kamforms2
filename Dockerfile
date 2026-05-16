@@ -1,18 +1,18 @@
-FROM node:22-alpine AS deps
+FROM node:22-bookworm-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN apk add --no-cache libc6-compat && \
-    npm ci --legacy-peer-deps --include=optional && \
-    npm rebuild rollup
+RUN npm ci --legacy-peer-deps --include=optional && \
+    npm install --no-save --legacy-peer-deps @rollup/rollup-linux-x64-gnu@4.53.3 && \
+    node -e "require('@rollup/rollup-linux-x64-gnu')"
 
-FROM node:22-alpine AS builder
+FROM node:22-bookworm-slim AS builder
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-FROM node:22-alpine AS runner
+FROM node:22-bookworm-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
