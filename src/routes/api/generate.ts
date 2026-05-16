@@ -108,7 +108,7 @@ export const Route = createFileRoute('/api/generate')({
 
           const res = streamObject({
 											// @ts-expect-error - error message is verbose and messy, type mismatch between AI SDK versions
-											model: deepseek(process.env.DEEPSEEK_MODEL ?? 'deepseek-chat'),
+											model: deepseek.chat(process.env.DEEPSEEK_MODEL ?? 'deepseek-chat'),
 											schema: aiFormSchema,
 											prompt: prompt,
 											system:
