@@ -2,8 +2,12 @@ FROM node:22-bookworm-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --legacy-peer-deps --include=optional && \
-    npm install --no-save --legacy-peer-deps @rollup/rollup-linux-x64-gnu@4.53.3 && \
-    node -e "require('@rollup/rollup-linux-x64-gnu')"
+    npm install --no-save --legacy-peer-deps \
+      @rollup/rollup-linux-x64-gnu@4.53.3 \
+      lightningcss-linux-x64-gnu@1.30.2 \
+      @tailwindcss/oxide-linux-x64-gnu@4.1.18 \
+      @rolldown/binding-linux-x64-gnu@1.0.1 && \
+    node -e "require('@rollup/rollup-linux-x64-gnu'); require('lightningcss-linux-x64-gnu'); require('@tailwindcss/oxide-linux-x64-gnu'); require('@rolldown/binding-linux-x64-gnu')"
 
 FROM node:22-bookworm-slim AS builder
 WORKDIR /app
