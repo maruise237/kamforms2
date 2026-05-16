@@ -1,27 +1,45 @@
-# Formcn
+# Kamforms V2
 
-**Build production-ready forms with a few clicks**
+Kamforms V2 is a TanStack Start form builder and SaaS foundation based on the useful parts of Formcn.
 
-![screenshot](https://0ecd2qxhjqgqxftv.public.blob.vercel-storage.com/850_1x_shots_so.jpg)
+The product direction is:
 
-A modern form builder that lets you build production-ready forms using shadcn/ui components.
+> Cree ton formulaire en quelques secondes avec l'IA, publie-le, recois les reponses dans ton dashboard, par email ou WhatsApp, puis exporte les donnees.
 
-## Motivation
+## Stack
 
-Forms are tricky. They are one of the most common things you'll build in a web application, but also one of the most complex. While AI can help generate forms you need, the results are not predicatble and inconsistent and can use undesirable dependencies. Because form code is much a boilerplate code, we can automate it.
+- TanStack Start
+- React
+- React Hook Form
+- Zod
+- Tailwind CSS
+- shadcn/ui-style components
+- Docker/Dokploy
 
-## Features
+## Current Foundation
 
-- **Single/Multi-step forms** with smooth navigation
-- **Formcn AI** scaffold forms fields without having to start from scratch
-- **Type-safe validation** client and server side validation
-- **Beautiful UI** with Tailwind CSS and shadcn/ui
+- Formcn/TanStack Start base retained as the builder foundation.
+- Dokploy Docker setup added.
+- Cloudflare/Wrangler deployment path removed as primary target.
+- Kamforms `FormSchemaV2` contract added in `src/lib/kamforms/schema.ts`.
+- Zod generation, AI-output normalization, and V1-to-V2 migration helpers added.
 
-## Sponsors
+## Development
 
-- [ShadcnStudio](https://shadcnstudio.com/?utm_source=formcn&utm_medium=banner&utm_campaign=github): Shadcn blocks & templates
-- [Forminit](https://forminit.com?utm_source=formcn&utm_campaign=github): headless form backend API
+```bash
+npm install --legacy-peer-deps
+npm run dev
+```
 
-## License
+## Verification
 
-This project is open-source. See `LICENSE` for details.
+```bash
+npm test -- src/lib/kamforms/schema.test.ts
+npm run build
+```
+
+## Deployment
+
+Dokploy should build the included `Dockerfile` and expose the `app` container on port `3000`.
+
+See `KAMFORMS_V2_MIGRATION.md` for the migration and deployment plan.
