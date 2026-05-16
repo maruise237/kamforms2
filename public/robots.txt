@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 Disallow:
 
-Sitemap: https://formcn.dev/sitemap.xml
+Sitemap: https://kamforms2.kamtech.online/sitemap.xml

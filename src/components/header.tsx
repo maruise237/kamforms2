@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Menu } from 'lucide-react'
-import { FaGithub, FaXTwitter } from 'react-icons/fa6'
+import { AuthActions } from '@/components/auth/clerk-auth'
 import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
@@ -9,120 +9,73 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { urls } from '@/constants/urls'
 import { ModeToggle } from './mode-toggle'
 import { Logo } from './shared/logo'
 
-const links = [
-	{
-		label: 'Roadmap',
-		href: 'https://formcn.featurebase.app/',
-		target: '_blank',
-		rel: 'noopener noreferrer',
-	},
-	{
-		label: 'Hire me',
-		href: urls.twitter,
-		target: '_blank',
-		rel: 'noopener noreferrer',
-	},
-]
-
-const socialLinks = [
-	{ href: urls.github, Icon: FaGithub },
-	{ href: urls.twitter, Icon: FaXTwitter },
-]
+const navLinks = [
+	{ label: 'Templates', to: '/form-templates' },
+	{ label: 'Builder', to: '/form-builder' },
+	{ label: 'IA', to: '/ai-form-generator' },
+	{ label: 'Mes formulaires', to: '/my-forms' },
+] as const
 
 export function Header() {
 	return (
-		<div>
-			<div className="flex flex-row items-center justify-between px-2 md:px-5 py-2">
-				<div>
-					<Link to="/" className="cursor-pointer aspect-video">
-						<Logo />
-					</Link>
-				</div>
+		<header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+			<div className="mx-auto flex h-14 w-full max-w-[88rem] items-center justify-between px-4 sm:px-6 lg:px-8">
+				<Link to="/" className="shrink-0">
+					<Logo />
+				</Link>
 
-				{/* Desktop Navigation */}
-				<div className="hidden md:flex items-center sm:gap-4 gap-2">
-					<nav className="flex gap-2 items-center">
-						<Button variant="ghost" size="sm">
-							<Link to="/changelog">Changelog</Link>
+				<nav className="hidden items-center gap-1 md:flex">
+					{navLinks.map((link) => (
+						<Button key={link.to} variant="ghost" size="sm" asChild>
+							<Link to={link.to}>{link.label}</Link>
 						</Button>
-						{links.map(({ href, label, target, rel }) => {
-							return (
-								<Button key={href} variant="ghost" size="sm">
-									<a href={href} target={target} rel={rel}>
-										{label}
-									</a>
-								</Button>
-							)
-						})}
-					</nav>
-					<div className="flex gap-4">
-						{socialLinks.map(({ href, Icon }) => {
-							return (
-								<a
-									key={href}
-									href={href}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<Icon />
-								</a>
-							)
-						})}
-					</div>
+					))}
+				</nav>
+
+				<div className="hidden items-center gap-2 md:flex">
 					<ModeToggle />
+					<AuthActions compact />
+					<Button size="sm" asChild className="rounded-none font-semibold">
+						<Link to="/ai-form-generator">Creer</Link>
+					</Button>
 				</div>
 
-				{/* Mobile Dropdown Menu */}
-				<div className="md:hidden flex items-center gap-2">
+				<div className="flex items-center gap-2 md:hidden">
 					<ModeToggle />
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" size="sm" className="p-2">
-								<Menu size={20} />
-								<span className="sr-only">Open menu</span>
+							<Button variant="ghost" size="icon" className="rounded-none">
+								<Menu className="size-5" />
+								<span className="sr-only">Ouvrir le menu</span>
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end" className="sm:w-56 w-64 px-3 py-4">
+						<DropdownMenuContent align="end" className="w-64 p-2">
+							{navLinks.map((link) => (
+								<DropdownMenuItem key={link.to} asChild>
+									<Link to={link.to} className="w-full">
+										{link.label}
+									</Link>
+								</DropdownMenuItem>
+							))}
+							<DropdownMenuSeparator />
+							<DropdownMenuItem onSelect={(event) => event.preventDefault()}>
+								<div className="w-full py-1">
+									<AuthActions compact />
+								</div>
+							</DropdownMenuItem>
+							<DropdownMenuSeparator />
 							<DropdownMenuItem asChild>
-								<Link to="/changelog" className="w-full">
-									Changelog
+								<Link to="/ai-form-generator" className="w-full font-medium">
+									Creer avec l'IA
 								</Link>
 							</DropdownMenuItem>
-							{links.map(({ href, label, target, rel }) => {
-								return (
-									<DropdownMenuItem key={href} asChild>
-										<a href={href} target={target} rel={rel} className="w-full">
-											{label}
-										</a>
-									</DropdownMenuItem>
-								)
-							})}
-							<DropdownMenuSeparator />
-							<div className="flex items-center justify-center gap-4 p-2">
-								{socialLinks.map(({ href, Icon }) => {
-									return (
-										<a
-											key={href}
-											href={href}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="p-1 hover:bg-accent rounded-md transition-colors"
-										>
-											<Icon size={16} />
-										</a>
-									)
-								})}
-							</div>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
 			</div>
-
-			<hr />
-		</div>
+		</header>
 	)
 }

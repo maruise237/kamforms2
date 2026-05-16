@@ -28,11 +28,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: 'width=device-width, initial-scale=1',
 			},
 			{
-				title: 'Modern shadcn form builder | Formcn',
+				title: 'Kamforms V2 | Formulaires IA, dashboard et notifications',
 			},
 			{
 				description:
-					'Build production-ready shadcn form with a few clicks, including shadcn multi-step form.',
+					'Cree des formulaires avec IA, publie-les, collecte les reponses et exporte tes donnees depuis Kamforms.',
 			},
 		],
 		links: [
@@ -61,11 +61,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						})();
 					`,
 					}}
-				/>
-				<script
-					src="https://analytics.ahrefs.com/analytics.js"
-					data-key="WoVl2u6H/vqWVNgGbnn6bQ"
-					async
 				/>
 			</head>
 			<body>

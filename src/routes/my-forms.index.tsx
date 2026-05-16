@@ -10,6 +10,7 @@ function MyFormsIndexRedirect() {
 		<Navigate
 			to="/my-forms/$formTemplate"
 			params={{ formTemplate: templates[0].id }}
+			search={{ id: undefined }}
 			replace
 		/>
 	)

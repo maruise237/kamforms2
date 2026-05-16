@@ -101,8 +101,16 @@ export const formSettingsV2Schema = z.object({
   collectIp: z.boolean().optional(),
   allowMultipleSubmissions: z.boolean().optional(),
   notifications: z.object({
+    enabled: z.boolean().optional(),
     email: z.boolean().optional(),
+    recipientEmail: z.string().email().optional(),
     whatsapp: z.boolean().optional(),
+    whatsappTo: z.string().optional(),
+    webhook: z.boolean().optional(),
+    webhookUrl: z.string().url().optional(),
+    autoresponder: z.boolean().optional(),
+    autoresponderFieldId: z.string().optional(),
+    dailyDigest: z.boolean().optional(),
   }),
   theme: z.object({
     primaryColor: z.string().optional(),
@@ -155,8 +163,16 @@ const defaultSettingsV2: FormSettingsV2 = {
   collectIp: false,
   allowMultipleSubmissions: true,
   notifications: {
+    enabled: true,
     email: true,
+    recipientEmail: undefined,
     whatsapp: true,
+    whatsappTo: undefined,
+    webhook: false,
+    webhookUrl: undefined,
+    autoresponder: false,
+    autoresponderFieldId: undefined,
+    dailyDigest: false,
   },
   theme: {
     radius: "md",
@@ -446,7 +462,7 @@ function fieldToZodV2(field: FormFieldV2): z.ZodTypeAny {
     case "rating":
     case "slider": {
       let schema = z.coerce.number({
-        invalid_type_error: `${field.label} doit etre un nombre`,
+        error: `${field.label} doit etre un nombre`,
       });
       if (validation?.min !== undefined) schema = schema.min(validation.min, validation.customMessage);
       if (validation?.max !== undefined) schema = schema.max(validation.max, validation.customMessage);
@@ -456,7 +472,7 @@ function fieldToZodV2(field: FormFieldV2): z.ZodTypeAny {
     case "consent":
       return field.required
         ? z.literal(true, {
-            errorMap: () => ({ message: `${field.label} est requis` }),
+            error: `${field.label} est requis`,
           })
         : z.boolean().optional();
     case "select":

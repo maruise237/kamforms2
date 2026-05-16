@@ -7,8 +7,8 @@
     "motion"
   ],
   "registryDependencies": [
-    "@formcn/use-multi-step-viewer",
-    "@formcn/stepper",
+    "@kamforms/use-multi-step-viewer",
+    "@kamforms/stepper",
     "button"
   ],
   "files": [

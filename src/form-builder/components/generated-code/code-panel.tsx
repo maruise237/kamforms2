@@ -91,11 +91,11 @@ const installableShadcnComponents: Partial<
 	DatePicker: 'popover calendar',
 	Separator: 'separator',
 	// none-shadcn components
-	MultiSelect: '@formcn/multi-select',
-	Password: '@formcn/password',
-	FileUpload: '@formcn/file-upload',
-	Rating: '@formcn/rating',
-	TagInput: '@formcn/tag-input',
+	MultiSelect: '@kamforms/multi-select',
+	Password: '@kamforms/password',
+	FileUpload: '@kamforms/file-upload',
+	Rating: '@kamforms/rating',
+	TagInput: '@kamforms/tag-input',
 }
 
 //======================================
@@ -132,7 +132,7 @@ const Cli = ({
 						'motion',
 					],
 					registryDependencies: isMS
-						? [...registryDependencies, '@formcn/stepper']
+						? [...registryDependencies, '@kamforms/stepper']
 						: registryDependencies,
 					files: [
 						{
@@ -233,7 +233,7 @@ const useGenerateCode = () => {
 	const packagesSet = new Set(formElementTypes)
 	let registryDependencies = ['field', ...Array.from(packagesSet)].join(' ')
 	if (isMS) {
-		registryDependencies += ' @formcn/multi-step-viewer @formcn/stepper'
+		registryDependencies += ' @kamforms/multi-step-viewer @kamforms/stepper'
 	}
 	const dependencies = 'react-hook-form zod @hookform/resolvers motion'
 	return {

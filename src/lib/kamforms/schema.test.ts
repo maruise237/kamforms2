@@ -21,8 +21,44 @@ describe("Kamforms V2 schema", () => {
     expect(schema.description).toBe("Collecte les informations client");
     expect(schema.settings.mode).toBe("single_page");
     expect(schema.settings.submitLabel).toBe("Envoyer");
+    expect(schema.settings.notifications).toMatchObject({
+      enabled: true,
+      email: true,
+      whatsapp: true,
+      webhook: false,
+      autoresponder: false,
+      dailyDigest: false,
+    });
     expect(schema.pages).toEqual([{ id: "page-1", fields: [] }]);
     expect(formSchemaV2Schema.safeParse(schema).success).toBe(true);
+  });
+
+  it("supports owner notifications and webhooks in the V2 contract", () => {
+    const schema = createDefaultFormSchemaV2({
+      settings: {
+        notifications: {
+          recipientEmail: "admin@kamtech.online",
+          webhook: true,
+          webhookUrl: "https://kamtech.online/api/kamforms/webhook",
+          autoresponder: true,
+          autoresponderFieldId: "email",
+          dailyDigest: true,
+        },
+      },
+    });
+
+    expect(formSchemaV2Schema.safeParse(schema).success).toBe(true);
+    expect(schema.settings.notifications).toMatchObject({
+      enabled: true,
+      email: true,
+      recipientEmail: "admin@kamtech.online",
+      whatsapp: true,
+      webhook: true,
+      webhookUrl: "https://kamtech.online/api/kamforms/webhook",
+      autoresponder: true,
+      autoresponderFieldId: "email",
+      dailyDigest: true,
+    });
   });
 
   it("defines a default field for every P0 field type", () => {

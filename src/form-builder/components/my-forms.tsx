@@ -239,7 +239,7 @@ export function MyForms() {
 						<Link to="/ai-form-generator">
 							<Button variant="default">
 								<BsStars />
-								Formcn AI
+								Kamforms IA
 							</Button>
 						</Link>
 						<div className="flex items-center gap-2">

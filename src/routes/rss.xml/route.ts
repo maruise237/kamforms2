@@ -10,14 +10,14 @@ export const Route = createFileRoute('/rss/xml')({
 				const rssXml = await generateRegistryRssFeed({
 					baseUrl,
 					rss: {
-						title: '@formcn',
-						description: 'Subscribe to @formcn updates',
-						link: 'https://formcn.dev',
+						title: 'Kamforms',
+						description: 'Suivre les mises a jour Kamforms',
+						link: 'https://kamforms2.kamtech.online',
 						pubDateStrategy: 'githubLastEdit',
 					},
 					github: {
-						owner: 'ali-Hussein-dev',
-						repo: 'formcn',
+						owner: 'maruise237',
+						repo: 'kamforms2',
 						token: process.env.GITHUB_TOKEN ?? '',
 					},
 				})

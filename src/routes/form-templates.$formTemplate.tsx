@@ -5,7 +5,7 @@ import { templates } from '@/form-builder/constant/templates'
 /** Template-specific meta descriptions for SEO (≤160 chars) */
 const templateDescriptions: Record<string, string> = {
 	'template-signup':
-		'Free signup form template with email, password & social login. Build production-ready shadcn forms with Formcn.',
+		'Modele de formulaire signup avec email, mot de passe et connexion sociale. Personnalise-le avec Kamforms.',
 	'template-credit-card':
 		'Credit card payment form template. Secure checkout form with shadcn components. Customize and deploy in minutes.',
 	'template-login':
@@ -33,14 +33,14 @@ const templateDescriptions: Record<string, string> = {
 }
 
 const DEFAULT_DESCRIPTION =
-	'Build and customize this form with Formcn. Free shadcn form templates you can edit and export for your React app.'
+	'Construis et personnalise ce formulaire avec Kamforms. Modeles shadcn editables et exportables pour React.'
 
 export const Route = createFileRoute('/form-templates/$formTemplate')({
 	component: FormTemplateRouteComponent,
 	head: ({ params }) => {
 		const template = templates.find((t) => t.id === params.formTemplate)
 		const title = template?.title ?? 'Form'
-		const fullTitle = `${title} | Formcn`
+		const fullTitle = `${title} | Kamforms`
 		const description =
 			templateDescriptions[params.formTemplate] ?? DEFAULT_DESCRIPTION
 

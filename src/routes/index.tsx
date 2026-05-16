@@ -1,246 +1,297 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { BsPatchCheck, BsStars } from 'react-icons/bs'
-import { FaGithub, FaWandMagicSparkles } from 'react-icons/fa6'
-import { FiArrowRight, FiGitCommit } from 'react-icons/fi'
 import {
-	SiFramer,
-	SiReact,
-	SiReacthookform,
-	SiShadcnui,
-	SiTailwindcss,
-	SiTypescript,
-	SiZod,
-} from 'react-icons/si'
+	ArrowRight,
+	BarChart3,
+	Bot,
+	CheckCircle2,
+	Download,
+	FileText,
+	Mail,
+	MessageCircle,
+	MousePointer2,
+	ShieldCheck,
+	Sparkles,
+} from 'lucide-react'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
-import { SponsorsSection } from '@/components/sponsors-section'
 import { Button } from '@/components/ui/button'
-import { CardDescription, CardTitle } from '@/components/ui/card'
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { urls } from '@/constants/urls'
 import { cn } from '@/lib/utils'
+
 export const Route = createFileRoute('/')({ component: App })
 
-const logos = [
+const steps = [
 	{
-		name: 'React 19',
-		Logo: SiReact,
+		title: 'Decris le besoin',
+		text: 'L’IA propose un formulaire multi-etapes avec champs, validations et message de fin.',
 	},
 	{
-		name: 'TypeScript',
-		Logo: SiTypescript,
+		title: 'Ajuste le formulaire',
+		text: 'Ajoute des champs, change les couleurs, previsualise mobile et publie en quelques minutes.',
 	},
 	{
-		name: 'Tailwind 4',
-		Logo: SiTailwindcss,
-	},
-	{
-		name: 'Shadcn',
-		Logo: SiShadcnui,
-	},
-	{
-		name: 'Zod 4',
-		Logo: SiZod,
-	},
-	{
-		name: 'React Hook Form',
-		Logo: SiReacthookform,
-	},
-	{
-		name: 'Motion',
-		Logo: SiFramer,
+		title: 'Recois les reponses',
+		text: 'Les soumissions arrivent dans le dashboard, par email ou WhatsApp, puis s’exportent en CSV.',
 	},
 ]
 
-const features = [
+const quickActions = [
 	{
-		icon: BsPatchCheck,
-		title: 'Production-ready code',
-		text: 'No inconsistent AI generated code, always consistent battle-tested code and easily maintainable',
+		title: 'Creation IA',
+		text: 'Genere une premiere version exploitable a partir d’une phrase.',
+		to: '/ai-form-generator',
+		icon: Bot,
 	},
 	{
-		icon: FiGitCommit,
-		title: 'Shadcn multi-step form',
-		text: 'Easily choose between one step and multi-step forms that suit your needs',
+		title: 'Templates metiers',
+		text: 'Recrutement, devis, inscription, satisfaction ou contact.',
+		to: '/form-templates',
+		icon: FileText,
 	},
 	{
-		icon: SiZod,
-		title: 'Input validation with Zod',
-		text: 'Client/server side validation with Zod',
-	},
-	{
-		icon: FaWandMagicSparkles,
-		title: 'Easy to use',
-		text: 'You can bring generated code and dependencies to your project with one command, powered by shadcn registry CLI',
-	},
-	{
-		icon: BsStars,
-		title: 'Formcn AI',
-		text: 'Scaffold your form components instantly without creating each form field manually',
+		title: 'Mes formulaires',
+		text: 'Reprends un brouillon, publie, duplique ou consulte les reponses.',
+		to: '/my-forms',
+		icon: BarChart3,
 	},
 ]
-const CtaButton = () => (
-	<Link
-		to="/form-templates/$formTemplate"
-		params={{ formTemplate: 'template-signup' }}
-	>
-		<Button className="font-semibold">Create Form</Button>
-	</Link>
-)
-const CardDecorator = ({ children }: { children: React.ReactNode }) => (
-	<div className="mask-radial-from-40% mask-radial-to-60% relative size-32 mx-auto duration-200 [--color-border:color-mix(in_oklab,var(--foreground)10%,transparent)] group-hover:[--color-border:color-mix(in_oklab,var(--foreground)20%,transparent)] dark:[--color-border:color-mix(in_oklab,var(--primary)15%,transparent)] dark:group-hover:[--color-border:color-mix(in_oklab,var(--primary)20%,transparent)]">
-		<div
-			aria-hidden
-			className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:24px_24px] dark:opacity-50"
-		/>
 
-		<div className="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
-			{children}
-		</div>
-	</div>
-)
+const capabilities = [
+	{ label: 'Champs avances', icon: MousePointer2 },
+	{ label: 'Validation Zod', icon: ShieldCheck },
+	{ label: 'Email', icon: Mail },
+	{ label: 'WhatsApp', icon: MessageCircle },
+	{ label: 'Export CSV', icon: Download },
+]
+
+const liveRows = [
+	{ form: 'Demande de devis', status: 'Publie', answers: '128', channel: 'Email + WhatsApp' },
+	{ form: 'Recrutement commercial', status: 'Brouillon', answers: '0', channel: 'Dashboard' },
+	{ form: 'Satisfaction client', status: 'Publie', answers: '47', channel: 'CSV pret' },
+]
+
 function App() {
 	return (
-		<div>
+		<div className="min-h-[100dvh] bg-background text-foreground">
 			<Header />
-			<div className=" flex flex-col w-full mx-auto px-2 sm:px-4 h-full">
-				<div className="border-x container border-dashed mx-auto grow min-h-screen flex flex-col relative">
-					<div className="relative">
-						{/* <div className="rounded-bl-[9.4rem] border-dashed absolute size-24 border-l border-b left-0 bottom-0"></div> */}
-						{/* <div className="rounded-br-[9.4rem] border-dashed absolute size-24 border-r border-b right-0 bottom-0"></div> */}
-						<div className="py-5 px-3 sm:py-6 md:py-8 md:px-6 w-full grow">
-							<div className="h-[80vh] grid place-items-center">
-								<div>
-									<Button
-										variant="outline"
-										className="rounded-full mx-auto py-1 mb-10 w-fit flex h-auto"
-										asChild
-									>
-										<Link to="/changelog">
-											New: stepper, tag input, and more...
-											<FiArrowRight />
-										</Link>
-									</Button>
-									<h1 className="mb-4 text-3xl sm:text-4xl font-black md:text-5xl lg:text-6xl tracking-tight text-center lg:leading-16 dark:bg-linear-to-b dark:from-white dark:to-white/70 dark:bg-clip-text dark:text-transparent">
-										Build production-ready <br /> shadcn form with a few clicks
-									</h1>
-									<p className="text-muted-foreground text-center text-pretty max-w-xl mx-auto">
-										Shadcn multi-step form, validation, accessible with ARIA and
-										well-styled shadcn components
+			<main className="mx-auto w-full max-w-[88rem] px-4 sm:px-6 lg:px-8">
+				<section className="grid min-h-[calc(100dvh-5rem)] grid-cols-1 gap-8 py-10 md:grid-cols-[1.03fr_0.97fr] md:items-center md:py-16 lg:gap-14">
+					<div className="max-w-3xl">
+						<div className="mb-6 inline-flex items-center gap-2 border border-border bg-muted/50 px-3 py-1.5 text-xs font-medium text-muted-foreground">
+							<Sparkles className="size-3.5" />
+							Kamforms V2 · IA, publication, reponses, export
+						</div>
+						<h1 className="text-balance text-4xl font-black leading-[0.98] tracking-tight sm:text-5xl lg:text-7xl">
+							Cree ton formulaire en quelques secondes avec l’IA.
+						</h1>
+						<p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+							Publie-le, recois les reponses dans ton dashboard, par email ou
+							WhatsApp, puis exporte les donnees sans recoder un formulaire a
+							chaque campagne.
+						</p>
+						<div className="mt-8 flex flex-col gap-3 sm:flex-row">
+							<Button size="lg" asChild className="h-11 rounded-none font-semibold">
+								<Link to="/ai-form-generator">
+									Creer avec l’IA
+									<ArrowRight className="size-4" />
+								</Link>
+							</Button>
+							<Button
+								size="lg"
+								variant="outline"
+								asChild
+								className="h-11 rounded-none font-semibold"
+							>
+								<Link to="/form-templates">Choisir un template</Link>
+							</Button>
+						</div>
+						<div className="mt-8 grid grid-cols-2 gap-4 border-t border-dashed pt-6 sm:grid-cols-4">
+							{[
+								['13', 'champs P0'],
+								['2 min', 'pour publier'],
+								['24/7', 'collecte publique'],
+								['CSV', 'export direct'],
+							].map(([value, label]) => (
+								<div key={label}>
+									<p className="font-mono text-2xl font-semibold tabular-nums">
+										{value}
 									</p>
-									<div className="mx-auto pt-6 w-fit flex gap-4 ">
-										<a
-											href={urls.github}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<Button variant="outline">
-												<FaGithub />
-												Star on Github
-											</Button>
-										</a>
-										<CtaButton />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="border-t w-full border-dashed p-1">
-						<div className="dark:bg-muted/40 bg-muted text-card-foreground py-6 md:py-8 ">
-							<h2 className="text-lg sm:text-xl text-center text-pretty font-bold mb-2 text-primary/85">
-								Powered by Tech Stack You Trust
-							</h2>
-							<div className="flex gap-5 lg:gap-14 md:gap-8 py-5 mx-auto w-fit">
-								{logos.map(({ name, Logo }) => {
-									const Icon = <Logo className="size-6" />
-									return (
-										<TooltipProvider key={name}>
-											<Tooltip>
-												<TooltipTrigger asChild>
-													<button
-														className="size-full flex justify-center items-center"
-														type="button"
-													>
-														{Icon}
-													</button>
-												</TooltipTrigger>
-												<TooltipContent>
-													<p>{name}</p>
-												</TooltipContent>
-											</Tooltip>
-										</TooltipProvider>
-									)
-								})}
-							</div>
-						</div>
-					</div>
-					<div className="border-t border-dashed w-full">
-						<h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center text-pretty font-bold text-primary/85 py-12 border-b border-dashed">
-							Build your Forms with Confidence
-						</h2>
-						<div className="grid md:grid-cols-6 grid-cols-1">
-							{features.map((o, i) => (
-								<div
-									key={o.title}
-									className={cn(
-										'grow h-full',
-										i < 3 && 'md:col-span-2',
-										i === 3 && 'md:col-span-3',
-										i === 4 && 'md:col-span-3',
-									)}
-								>
-									<div
-										className={cn(
-											'h-full border-dashed',
-											i < 4 && 'border-b md:border-b-0',
-											i < 3 && 'md:border-b',
-											i === 1 && 'md:border-x',
-											i === 2 && 'md:border-r',
-											i === 3 && 'md:border-r md:col-span-3',
-											i === 4 && 'md:border-r md:col-span-3',
-										)}
-									>
-										<div className="p-4 lg:p-6 rounded-xl">
-											<CardDecorator>
-												<o.icon className="size-6" />
-											</CardDecorator>
-											<CardTitle className="mb-3 text-xl gap-2 pt-3 text-center ">
-												{o.title}
-											</CardTitle>
-											<CardDescription className="text-center text-balance">
-												{o.text}
-											</CardDescription>
-										</div>
-									</div>
+									<p className="mt-1 text-xs text-muted-foreground">{label}</p>
 								</div>
 							))}
 						</div>
 					</div>
-					<SponsorsSection />
-					<div className="w-full border-t border-dashed h-full overflow-hidden p-1">
-						<div className="w-full relative py-8 flex justify-center">
-							{/* Gradient Diagonal Lines Pattern */}
-							<div
-								className="absolute inset-0 -z-10 pointer-events-none "
-								style={{
-									backgroundImage: `
-                      repeating-linear-gradient(45deg, 
-                        var(--muted) 0px, 
-                        var(--muted) 1px, 
-                        transparent 1px, 
-                        transparent 5px)`,
-								}}
-							/>
-							<CtaButton />
+
+					<div className="relative">
+						<div className="absolute -inset-4 -z-10 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklab,var(--foreground)_9%,transparent),transparent_35%),radial-gradient(circle_at_80%_70%,color-mix(in_oklab,var(--foreground)_7%,transparent),transparent_30%)]" />
+						<div className="border border-border bg-card shadow-[0_24px_80px_-40px_rgba(0,0,0,0.35)]">
+							<div className="flex items-center justify-between border-b border-border px-4 py-3">
+								<div>
+									<p className="text-sm font-semibold">Assistant formulaire</p>
+									<p className="text-xs text-muted-foreground">
+										Generation schema Kamforms V2
+									</p>
+								</div>
+								<span className="bg-foreground px-2 py-1 text-[10px] font-medium text-background">
+									LIVE
+								</span>
+							</div>
+							<div className="grid gap-4 p-4 sm:p-5">
+								<div className="border border-border bg-muted/35 p-4">
+									<p className="text-xs text-muted-foreground">Prompt</p>
+									<p className="mt-2 text-sm leading-6">
+										Creer un formulaire de demande de devis pour une agence
+										digitale avec budget, fichiers et contact WhatsApp.
+									</p>
+								</div>
+								<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+									{[
+										'Informations client',
+										'Details du projet',
+										'Budget et delai',
+										'Fichiers joints',
+									].map((item, index) => (
+										<div
+											key={item}
+											className="flex items-center gap-3 border border-border bg-background p-3"
+										>
+											<span className="flex size-7 items-center justify-center bg-muted font-mono text-xs">
+												{index + 1}
+											</span>
+											<span className="text-sm font-medium">{item}</span>
+										</div>
+									))}
+								</div>
+								<div className="overflow-hidden border border-border">
+									<div className="grid grid-cols-[1.4fr_.7fr_.5fr] border-b border-border bg-muted/45 px-3 py-2 text-[11px] font-medium text-muted-foreground">
+										<span>Formulaire</span>
+										<span>Canal</span>
+										<span className="text-right">Rep.</span>
+									</div>
+									{liveRows.map((row, index) => (
+										<div
+											key={row.form}
+											className={cn(
+												'grid grid-cols-[1.4fr_.7fr_.5fr] px-3 py-3 text-xs',
+												index !== liveRows.length - 1 && 'border-b border-border',
+											)}
+										>
+											<div>
+												<p className="font-medium">{row.form}</p>
+												<p className="text-muted-foreground">{row.status}</p>
+											</div>
+											<span className="text-muted-foreground">{row.channel}</span>
+											<span className="text-right font-mono tabular-nums">
+												{row.answers}
+											</span>
+										</div>
+									))}
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				</section>
+
+				<section className="border-t border-dashed py-10 md:py-14">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+						{quickActions.map(({ title, text, to, icon: Icon }) => (
+							<Link
+								key={title}
+								to={to}
+								className="group border border-border bg-card p-5 transition duration-200 hover:-translate-y-0.5 hover:bg-muted/40 active:translate-y-0"
+							>
+								<div className="flex items-start justify-between gap-4">
+									<Icon className="size-5 text-muted-foreground transition group-hover:text-foreground" />
+									<ArrowRight className="size-4 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-foreground" />
+								</div>
+								<h2 className="mt-7 text-lg font-semibold">{title}</h2>
+								<p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+							</Link>
+						))}
+					</div>
+				</section>
+
+				<section className="grid grid-cols-1 gap-8 border-t border-dashed py-10 md:grid-cols-[.8fr_1.2fr] md:py-14">
+					<div>
+						<p className="text-sm font-medium text-muted-foreground">
+							Prise en main
+						</p>
+						<h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+							Une logique simple pour les PME, agences et services locaux.
+						</h2>
+					</div>
+					<div className="grid gap-3">
+						{steps.map((step, index) => (
+							<div
+								key={step.title}
+								className="grid grid-cols-[2.5rem_1fr] gap-4 border-t border-border py-5 first:border-t-0"
+							>
+								<span className="font-mono text-sm text-muted-foreground">
+									0{index + 1}
+								</span>
+								<div>
+									<h3 className="font-semibold">{step.title}</h3>
+									<p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">
+										{step.text}
+									</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</section>
+
+				<section className="border-t border-dashed py-10 md:py-14">
+					<div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+						<div>
+							<p className="text-sm font-medium text-muted-foreground">
+								Fondations V2
+							</p>
+							<h2 className="mt-3 text-3xl font-bold tracking-tight">
+								Le moteur est pret pour le dashboard.
+							</h2>
+						</div>
+						<Button asChild variant="outline" className="rounded-none">
+							<Link to="/form-builder" search={{ id: undefined }}>
+								Ouvrir le builder
+							</Link>
+						</Button>
+					</div>
+					<div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-5">
+						{capabilities.map(({ label, icon: Icon }) => (
+							<div
+								key={label}
+								className="flex min-h-28 flex-col justify-between border border-border bg-muted/25 p-4"
+							>
+								<Icon className="size-5 text-muted-foreground" />
+								<p className="text-sm font-medium">{label}</p>
+							</div>
+						))}
+					</div>
+				</section>
+
+				<section className="border-t border-dashed py-10 md:py-16">
+					<div className="grid gap-6 border border-border bg-foreground p-6 text-background md:grid-cols-[1fr_auto] md:items-center md:p-8">
+						<div>
+							<h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+								Lance un formulaire test maintenant.
+							</h2>
+							<p className="mt-2 max-w-2xl text-sm leading-6 text-background/70">
+								La V2 garde une base TanStack rapide, mais le produit cible reste
+								Kamforms: publication, collecte, notifications et export.
+							</p>
+						</div>
+						<Button
+							asChild
+							variant="secondary"
+							className="h-11 rounded-none font-semibold"
+						>
+							<Link to="/ai-form-generator">
+								Commencer
+								<CheckCircle2 className="size-4" />
+							</Link>
+						</Button>
+					</div>
+				</section>
+			</main>
 			<Footer />
 		</div>
 	)

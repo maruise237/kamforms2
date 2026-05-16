@@ -60,7 +60,7 @@ const changelogData: ChangelogEntry[] = [
 	{
 		date: 'Jan 18, 2026',
 		changes: [
-			'breaking: remove server actions support, formcn is no longer tied to Next.js and can be used with any React framework',
+			'feat: Kamforms V2 passe sur une base TanStack Start rapide pour Dokploy',
 		],
 	},
 	{

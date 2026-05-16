@@ -12,6 +12,8 @@ RUN npm ci --legacy-peer-deps --include=optional && \
 FROM node:22-bookworm-slim AS builder
 WORKDIR /app
 ENV NODE_ENV=production
+ARG VITE_CLERK_PUBLISHABLE_KEY
+ENV VITE_CLERK_PUBLISHABLE_KEY=$VITE_CLERK_PUBLISHABLE_KEY
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build

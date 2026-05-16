@@ -1,11 +1,9 @@
 export const urls = {
-	github: 'https://github.com/Ali-Hussein-dev/formcn',
-	twitter: 'https://x.com/alibey_10',
-	sponsor: 'https://github.com/sponsors/Ali-Hussein-dev',
+	github: 'https://github.com/maruise237/kamforms2',
+	twitter: 'https://x.com/kamtech',
+	sponsor: 'https://github.com/maruise237/kamforms2',
 	sponsors: {
-		forminit: 'https://forminit.com?utm_source=formcn&utm_campaign=github',
-		shadcnStudio:
-			'https://shadcnstudio.com/blocks?utm_source=formcn&utm_medium=banner&utm_campaign=github',
+		forminit: 'https://kamforms2.kamtech.online',
+		shadcnStudio: 'https://kamtech.online',
 	},
 }
-

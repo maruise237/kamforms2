@@ -4,7 +4,7 @@
   "title": "File Input",
   "description": "File upload component",
   "registryDependencies": [
-    "https://formcn.dev/r/use-file-upload.json",
+    "https://kamforms2.kamtech.online/r/use-file-upload.json",
     "button"
   ],
   "files": [

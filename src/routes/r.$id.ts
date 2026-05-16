@@ -53,18 +53,20 @@ export const Route = createFileRoute('/r/$id' as any)({
 					const { registryDependencies, dependencies, files, name } = body
 					const { id: key } = params
 					const isDev = process.env.NODE_ENV === 'development'
-					const baseUrl = isDev ? 'http://localhost:3000' : 'https://formcn.dev'
+					const baseUrl = isDev
+						? 'http://localhost:3000'
+						: 'https://kamforms2.kamtech.online'
 					
 					const registry = {
 						$schema: 'https://ui.shadcn.com/schema/registry.json',
-						homepage: 'https://formcn.dev',
-						author: 'formcn (https://formcn.dev)',
+						homepage: 'https://kamforms2.kamtech.online',
+						author: 'Kamforms (https://kamforms2.kamtech.online)',
 						name,
 						dependencies,
 						registryDependencies,
 						type: 'registry:block',
 						files,
-						// Add registry base URL so CLI can resolve @formcn namespace dependencies
+						// Add registry base URL so CLI can resolve namespace dependencies.
 						registry: `${baseUrl}/r/registry.json`,
 					}
 
@@ -75,7 +77,7 @@ export const Route = createFileRoute('/r/$id' as any)({
 
 					const registryId = isDev
 						? `http://localhost:3000/r/${key}.json`
-						: `@formcn/${key}`
+						: `@kamforms/${key}`
 
 					return new Response(
 						JSON.stringify({

@@ -21,6 +21,6 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@formcn": "https://formcn.dev/r/{name}.json"
+    "@kamforms": "https://kamforms2.kamtech.online/r/{name}.json"
   }
 }

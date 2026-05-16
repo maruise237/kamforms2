@@ -1,8 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "formcn",
-  "homepage": "https://formcn.dev",
-  "author": "formcn (https://formcn.dev)",
+  "name": "kamforms",
+  "homepage": "https://kamforms2.kamtech.online",
+  "author": "Kamforms (https://kamforms2.kamtech.online)",
   "items": [
     {
       "name": "tag-input",
@@ -69,7 +69,7 @@
         }
       ],
       "registryDependencies": [
-        "https://formcn.dev/r/use-file-upload.json",
+        "https://kamforms2.kamtech.online/r/use-file-upload.json",
         "button"
       ]
     },
@@ -105,8 +105,8 @@
       "description": "Multi-step form",
       "dependencies": ["motion"],
       "registryDependencies": [
-        "@formcn/use-multi-step-viewer",
-        "@formcn/stepper",
+        "@kamforms/use-multi-step-viewer",
+        "@kamforms/stepper",
         "button"
       ],
       "files": [

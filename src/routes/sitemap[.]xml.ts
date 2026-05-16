@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { templates } from '@/form-builder/constant/templates'
 
-const BASE_URL = 'https://formcn.dev'
+const BASE_URL = 'https://kamforms2.kamtech.online'
 
 export const Route = createFileRoute('/sitemap.xml')({
   server: {
