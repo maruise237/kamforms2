@@ -1,10 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Redis } from '@upstash/redis'
 
-const redis = new Redis({
-	url: process.env.UPSTASH_REDIS_REST_URL!,
-	token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-})
+const hasUpstashRestConfig =
+	!!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN
+
+const redis = hasUpstashRestConfig
+	? new Redis({
+			url: process.env.UPSTASH_REDIS_REST_URL!,
+			token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+		})
+	: null
 
 const responseHeaders = {
 	'Access-Control-Allow-Origin': '*',
@@ -22,6 +27,13 @@ export const Route = createFileRoute('/r/$id' as any)({
 				const registryId = id.endsWith('.json') ? id.slice(0, -5) : id
 
 				try {
+					if (!redis) {
+						return new Response('Registry storage is not configured', {
+							status: 503,
+							headers: responseHeaders,
+						})
+					}
+
 					const registryItem = await redis.get(registryId)
 					if (!registryItem) {
 						return new Response('Registry item not found', {
@@ -49,6 +61,19 @@ export const Route = createFileRoute('/r/$id' as any)({
 				request: Request
 			}) => {
 				try {
+					if (!redis) {
+						return new Response(
+							JSON.stringify({
+								data: null,
+								error: 'Registry storage is not configured',
+							}),
+							{
+								status: 503,
+								headers: responseHeaders,
+							},
+						)
+					}
+
 					const body = await request.json()
 					const { registryDependencies, dependencies, files, name } = body
 					const { id: key } = params

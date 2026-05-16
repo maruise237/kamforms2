@@ -1,20 +1,28 @@
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { createFileRoute } from '@tanstack/react-router'
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { streamObject } from "ai";
 import { aiFormSchema } from "@/form-builder/lib/ai-form-schema";
 
-const redis = new Redis({
-	url: process.env.UPSTASH_REDIS_REST_URL!,
-	token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+const deepseek = createOpenAI({
+	apiKey: process.env.DEEPSEEK_API_KEY,
+	baseURL: process.env.DEEPSEEK_BASE_URL ?? 'https://api.deepseek.com/v1',
 })
 
-const ratelimit = new Ratelimit({
-	redis,
-	limiter: Ratelimit.slidingWindow(10, "10 s"),
-	analytics: true,
-});
+const hasUpstashRestConfig =
+	!!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN
+
+const ratelimit = hasUpstashRestConfig
+	? new Ratelimit({
+			redis: new Redis({
+				url: process.env.UPSTASH_REDIS_REST_URL!,
+				token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+			}),
+			limiter: Ratelimit.slidingWindow(10, "10 s"),
+			analytics: true,
+		})
+	: null
 
 const responseHeaders = {
 	'Access-Control-Allow-Origin': '*',
@@ -56,8 +64,8 @@ export const Route = createFileRoute('/api/generate')({
             );
           }
 
-          // Rate limiting (skip in development)
-          if (process.env.NODE_ENV !== "development") {
+          // Rate limiting only runs when Upstash REST credentials are configured.
+          if (process.env.NODE_ENV !== "development" && ratelimit) {
             try {
               const ip = request.headers.get("x-forwarded-for") ?? "anonymous";
               const { success, limit, reset, remaining } = await ratelimit.limit(ip);
@@ -83,11 +91,11 @@ export const Route = createFileRoute('/api/generate')({
             }
           }
 
-          // Check for OpenAI API key
-          if (!process.env.OPENAI_API_KEY) {
-            console.error('OPENAI_API_KEY is not set');
+          // Check for DeepSeek API key
+          if (!process.env.DEEPSEEK_API_KEY) {
+            console.error('DEEPSEEK_API_KEY is not set');
             return new Response(
-              JSON.stringify({ error: 'OpenAI API key is not configured' }),
+              JSON.stringify({ error: 'DeepSeek API key is not configured' }),
               {
                 status: 500,
                 headers: {
@@ -100,7 +108,7 @@ export const Route = createFileRoute('/api/generate')({
 
           const res = streamObject({
 											// @ts-expect-error - error message is verbose and messy, type mismatch between AI SDK versions
-											model: openai('gpt-4o-mini'),
+											model: deepseek(process.env.DEEPSEEK_MODEL ?? 'deepseek-chat'),
 											schema: aiFormSchema,
 											prompt: prompt,
 											system:
@@ -141,4 +149,3 @@ export const Route = createFileRoute('/api/generate')({
     }
   }
 })
-

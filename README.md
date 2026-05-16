@@ -45,6 +45,6 @@ npm run build
 
 Dokploy should build the included `Dockerfile` and expose the `app` container on port `3000`.
 
-Set `VITE_CLERK_PUBLISHABLE_KEY` in Dokploy before building so Clerk buttons are active in production. Keep `CLERK_SECRET_KEY`, `RESEND_*`, and `EVOLUTION_*` for the server-side auth and notification flows.
+Set `VITE_CLERK_PUBLISHABLE_KEY` in Dokploy before building so Clerk buttons are active in production. Set `DEEPSEEK_API_KEY` so AI form generation works. Keep `CLERK_SECRET_KEY`, `RESEND_*`, and `EVOLUTION_*` for the server-side auth and notification flows.
 
 See `KAMFORMS_V2_MIGRATION.md` for the migration and deployment plan.
